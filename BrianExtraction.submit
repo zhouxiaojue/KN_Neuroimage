@@ -1,0 +1,28 @@
+Requirements  = ( OpSys == "LINUX" && Arch =="X86_64" )    
+
+# Set some min requirements... memory in MB, disk in KB
+request_cpus = 1
+request_memory = 2GB
+request_disk = 500MB
+#image_size = 2000000
+
+
+ notification = never
+# getenv = True
+
+Executable = antsBrainExtraction.sh 
+Universe = vanilla
+Log = $(Directory)/$(outputFile)_go_ants.log
+Error = $(Directory)/$(outputFile)_go_ants.error
+Output = $(Directory)/$(outputFile)_go_ants.output
+
+should_transfer_files = yes
+when_to_transfer_output = ON_EXIT
+
+transfer_input_files = /StudyDir/bin/ANTS,/StudyDir/bin/Atroops, /StudyDir/bin/N4BiasFieldCorrection,/StudyDir/bin/antsRegistration,/StudyDir/bin/antsApplyTransforms,$(templateFile),$(templateMaskFile),$(inputFile)
+
+transfer_output_files =$(nativeMaskedFile), $(nativeMaskFile)
+
+Arguments = $(templateFile) $(inputFile) $(outputFile) $(templateMaskFile)
+
+Queue
